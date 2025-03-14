@@ -45,13 +45,63 @@ public class SpellingBee {
     //  that will find the substrings recursively.
     public void generate() {
         // YOUR CODE HERE — Call your recursive method!
+        // These string will be helpful for recursive method
+        generateHelper(letters);
+    }
+
+    // Generate Helper
+    public void generateHelper(String lettersMain){
+
+
     }
 
     // TODO: Apply mergesort to sort all words. Do this by calling ANOTHER method
     //  that will find the substrings recursively.
-    public void sort() {
-        // YOUR CODE HERE
+
+    // Sort Helper
+    public ArrayList<String> sort(ArrayList<String> arr, int low, int high){
+        // Base case
+        if (high - low == 0){
+            ArrayList<String> newArr = new ArrayList<String>(1);
+            newArr.add(arr.get(0));
+            return newArr;
+        }
+        // Splitting into two halves
+        int med = (high + low) / 2;
+        ArrayList<String> arr1 = sort(arr, low, med);
+        ArrayList<String> arr2 = sort(arr, med + 1, high);
+        return merge(arr1, arr2);
     }
+
+    // Merge method
+    public ArrayList<String> merge(ArrayList<String> arr1, ArrayList<String> arr2){
+        // Create the arraylist of sorted things
+        ArrayList<String> merged = new ArrayList<String>();
+        int a = 0, b = 0;
+
+        // While loops to go through arrays
+        while (a < arr1.size() && b < arr2.size()){
+            int compareNum = arr1.get(a).compareTo(arr2.get(b));
+            // Sort alphabetically
+            if (compareNum < 1){
+                merged.add(arr1.get(a++));
+            }else{
+                merged.add(arr2.get(b++));
+            }
+        }
+
+        // Based on which array is empty
+        while (a < arr1.size()){
+            merged.add(arr1.get(a++));
+        }
+        while (b < arr2.size()){
+            merged.add(arr2.get(b++));
+        }
+
+        // Return sorted array
+        return merged;
+    }
+
 
     // Removes duplicates from the sorted list.
     public void removeDuplicates() {
@@ -69,6 +119,25 @@ public class SpellingBee {
     //  If it is not in the dictionary, remove it from words.
     public void checkWords() {
         // YOUR CODE HERE
+        int num = 0;
+        // Go through each string in words
+        while (num < words.size()){
+            if (found(words.get(num))){
+                num++
+            }else{
+                words.remove(num)
+            }
+        }
+    }
+
+    // Found function
+    public boolean found(String s, String[] dict){
+        // Base case
+        if(dict.isEmpty()){
+            return False
+        }
+
+
     }
 
     // Prints all valid words to wordList.txt

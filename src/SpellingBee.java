@@ -1,3 +1,5 @@
+// Alex Stoffel
+// This is my spelling bee code and given a string it will output all the words in that string
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -46,30 +48,51 @@ public class SpellingBee {
     public void generate() {
         // YOUR CODE HERE — Call your recursive method!
         // These string will be helpful for recursive method
-        generateHelper(letters);
+        makeWords("", letters);
     }
 
     // Generate Helper
-    public void generateHelper(String lettersMain){
+    public void makeWords(String usedWords, String rest){
+        // Base case: if the rest is empty
+        if (usedWords.length() >= 1){
+            words.add(usedWords);
+        }
 
-
+        // Splitting the rest up
+        String word1;
+        String word2;
+        for (int i = 0; i < rest.length(); i++){
+            // Recursive step
+            word1 = usedWords + rest.substring(i, i + 1);
+            word2 = rest.substring(0,i) + rest.substring(i + 1);
+            makeWords(word1,word2);
+        }
     }
 
     // TODO: Apply mergesort to sort all words. Do this by calling ANOTHER method
     //  that will find the substrings recursively.
 
+    // Sort
+    public void sort(){
+        // Calling on the helper method
+        words = sortHelper(words, 0, words.size());
+    }
+
     // Sort Helper
-    public ArrayList<String> sort(ArrayList<String> arr, int low, int high){
+    public ArrayList<String> sortHelper(ArrayList<String> arr, int low, int high){
         // Base case
-        if (high - low == 0){
+        if (high - low <= 1){
             ArrayList<String> newArr = new ArrayList<String>(1);
-            newArr.add(arr.get(0));
+            if (high > low){
+                // Add the smallest element
+                newArr.add(arr.get(low));
+            }
             return newArr;
         }
         // Splitting into two halves
         int med = (high + low) / 2;
-        ArrayList<String> arr1 = sort(arr, low, med);
-        ArrayList<String> arr2 = sort(arr, med + 1, high);
+        ArrayList<String> arr1 = sortHelper(arr, low, med);
+        ArrayList<String> arr2 = sortHelper(arr, med, high);
         return merge(arr1, arr2);
     }
 
@@ -83,7 +106,7 @@ public class SpellingBee {
         while (a < arr1.size() && b < arr2.size()){
             int compareNum = arr1.get(a).compareTo(arr2.get(b));
             // Sort alphabetically
-            if (compareNum < 1){
+            if (compareNum <= 0){
                 merged.add(arr1.get(a++));
             }else{
                 merged.add(arr2.get(b++));
@@ -122,22 +145,33 @@ public class SpellingBee {
         int num = 0;
         // Go through each string in words
         while (num < words.size()){
-            if (found(words.get(num))){
-                num++
+            // If the string is in the dictionary have, if else remove it
+            if (found(words.get(num), DICTIONARY, 0, DICTIONARY_SIZE)){
+                num++;
             }else{
-                words.remove(num)
+                words.remove(num);
             }
         }
     }
 
     // Found function
-    public boolean found(String s, String[] dict){
+    public boolean found(String s, String[] dict, int start, int finish){
         // Base case
-        if(dict.isEmpty()){
-            return False
+        if(start >= finish){
+            return false;
         }
 
+        // Storing the middle in a variable
+        int mid = (start + finish) / 2;
 
+        // Comparing it to
+        if (dict[mid].equals(s)){
+            return true;
+        }else if(dict[mid].compareTo(s) > 0){
+            return found(s, dict, start, mid);
+        }else{
+            return found(s, dict, mid + 1, finish);
+        }
     }
 
     // Prints all valid words to wordList.txt

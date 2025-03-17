@@ -24,7 +24,7 @@ import java.util.Scanner;
  * It utilizes recursion to generate the strings, mergesort to sort them, and
  * binary search to find them in a dictionary.
  *
- * @author Zach Blick, [ADD YOUR NAME HERE]
+ * @author Zach Blick, Alex Stoffel
  *
  * Written on March 5, 2023 for CS2 @ Menlo School
  *
@@ -53,7 +53,7 @@ public class SpellingBee {
 
     // Generate Helper
     public void makeWords(String usedWords, String rest){
-        // Base case: if the rest is empty
+        // If the word is longer than empty you can add it
         if (usedWords.length() >= 1){
             words.add(usedWords);
         }
@@ -61,6 +61,7 @@ public class SpellingBee {
         // Splitting the rest up
         String word1;
         String word2;
+        // Kind of acts as base case (if rest is empty, no more recursive calls)
         for (int i = 0; i < rest.length(); i++){
             // Recursive step
             word1 = usedWords + rest.substring(i, i + 1);

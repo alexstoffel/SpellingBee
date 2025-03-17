@@ -42,9 +42,6 @@ public class SpellingBee {
         words = new ArrayList<String>();
     }
 
-    // TODO: generate all possible substrings and permutations of the letters.
-    //  Store them all in the ArrayList words. Do this by calling ANOTHER method
-    //  that will find the substrings recursively.
     public void generate() {
         // YOUR CODE HERE — Call your recursive method!
         // These string will be helpful for recursive method
@@ -69,9 +66,6 @@ public class SpellingBee {
             makeWords(word1,word2);
         }
     }
-
-    // TODO: Apply mergesort to sort all words. Do this by calling ANOTHER method
-    //  that will find the substrings recursively.
 
     // Sort
     public void sort(){
@@ -139,10 +133,7 @@ public class SpellingBee {
         }
     }
 
-    // TODO: For each word in words, use binary search to see if it is in the dictionary.
-    //  If it is not in the dictionary, remove it from words.
     public void checkWords() {
-        // YOUR CODE HERE
         int num = 0;
         // Go through each string in words
         while (num < words.size()){
